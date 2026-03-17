@@ -47,8 +47,8 @@ PID       | Proses Adı           | Durum           | Parent PID
 ### 1. Depoyu Klonlayın
 
 ```bash
-git clone https://github.com/MertKadakal/Galerici-Sim.git
-cd Galerici-Sim
+git clone https://github.com/MertKadakal/pid-list-query.git
+cd pid-list-query
 ```
 
 ### 2. Derleyin
