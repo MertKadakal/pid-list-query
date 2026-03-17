@@ -2,8 +2,6 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <ctype.h>
-
-// Eksik olan C++ kütüphaneleri:
 #include <iostream>
 #include <vector>
 #include <string>
@@ -16,7 +14,6 @@ struct ProcessNode {
     std::vector<ProcessNode*> children;
 };
 
-// PID dizini mi kontrol et
 int is_pid_dir(const struct dirent *entry) {
     for (const char *p = entry->d_name; *p; p++) {
         if (!isdigit(*p)) return 0;
@@ -42,12 +39,10 @@ void printTree(ProcessNode* node, int depth = 0, bool isLast = true) {
 void cleanup(ProcessNode* node) {
     if (!node) return;
 
-    // Önce çocukları temizle (Post-order traversal)
     for (ProcessNode* child : node->children) {
         cleanup(child);
     }
 
-    // Sonra kendini sil
     delete node;
 }
 
@@ -83,7 +78,7 @@ int main() {
 
         int pid, ppid;
         char comm[256];
-        // Sadece ihtiyacımız olan PID, Name ve PPID'yi alıyoruz
+        // Sadece ihtiyac olan PID, Name ve PPID'yi al
         if (fscanf(fp, "%d (%[^)]) %*c %d", &pid, comm, &ppid) == 3) {
             ProcessNode* node = new ProcessNode();
             node->pid = pid;
@@ -101,7 +96,6 @@ int main() {
         if (all_processes.count(node->ppid) && node->ppid != node->pid) {
             all_processes[node->ppid]->children.push_back(node);
         } else {
-            // PID 1 genellikle root'tur (systemd)
             if (node->pid == 1) root = node;
         }
     }
